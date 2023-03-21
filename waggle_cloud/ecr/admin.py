@@ -1,5 +1,5 @@
 from django.contrib import admin
-from . import models
+from .models import App
 
 
-admin.site.register(models.App, list_display=("owner", "name", "version", "description"), search_fields=("owner__username", "name"))
+admin.site.register(App, list_display=("name", "version", "description", "owner"), search_fields=("name", "owner__username"))
