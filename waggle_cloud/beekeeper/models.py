@@ -16,7 +16,10 @@ class Beehive(models.Model):
 
 class Node(models.Model):
     vsn = models.CharField(max_length=8)
+    node_id = models.CharField(max_length=64)
     beehive = models.ForeignKey(Beehive, null=True, on_delete=models.SET_NULL)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL)
+    registered = models.DateTimeField(null=True, blank=True)
     commissioned = models.DateTimeField(null=True, blank=True)
     retired = models.DateTimeField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
