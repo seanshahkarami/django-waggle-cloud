@@ -16,8 +16,12 @@ class Beehive(models.Model):
 
 class Node(models.Model):
     vsn = models.CharField(max_length=8)
+    beehive = models.ForeignKey(Beehive, null=True, on_delete=models.SET_NULL)
+    commissioned = models.DateTimeField(null=True, blank=True)
+    retired = models.DateTimeField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    notes = models.TextField(default="", blank=True)
 
     def __str__(self):
         return self.vsn
