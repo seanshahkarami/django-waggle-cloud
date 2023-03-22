@@ -23,9 +23,11 @@ class NodeAdmin(admin.ModelAdmin):
     list_filter = ("beehive__name",)
     search_fields=("vsn", "node_id", "owner__username", "beehive__name")
     inlines = (InstallationInline,)
+    list_select_related = True
 
 
 @admin.register(models.NodeRegistrationToken)
 class NodeRegistrationTokenAdmin(admin.ModelAdmin):
     list_display = ("key", "user", "beehive", "created", "expires")
     search_fields=("user__username", "beehive__name")
+    list_select_related = True

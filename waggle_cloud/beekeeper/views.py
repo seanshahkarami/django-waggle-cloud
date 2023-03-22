@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework import viewsets
 from rest_framework.permissions import AllowAny
-from .models import Beehive, Node
+from .models import Beehive, Node, Installation
 
 
 class BeehiveSerializer(serializers.ModelSerializer):
@@ -11,12 +11,20 @@ class BeehiveSerializer(serializers.ModelSerializer):
         fields = ["name", "description", "created"]
 
 
+class InstallationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Installation
+        fields = ["start", "end", "is_protected"]
+
+
 class NodeSerializer(serializers.ModelSerializer):
     beehive = serializers.CharField(source="beehive.name", read_only=True)
+    installations = InstallationSerializer(many=True)
 
     class Meta:
         model = Node
-        fields = ["vsn", "node_id", "beehive", "created", "registered", "commissioned", "retired"]
+        fields = ["vsn", "node_id", "beehive", "created", "registered", "installations"]
 
 
 class BeehiveViewSet(viewsets.ReadOnlyModelViewSet):
