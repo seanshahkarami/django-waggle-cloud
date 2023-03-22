@@ -18,5 +18,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("waggle_cloud.ecr.urls")),
+    path("api/", include("waggle_cloud.ecr.urls")),
 ]
