@@ -11,20 +11,20 @@ class BeehiveSerializer(serializers.ModelSerializer):
         fields = ["name", "description", "created"]
 
 
-class InstallationSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Installation
-        fields = ["start", "end", "is_protected"]
-
-
 class NodeSerializer(serializers.ModelSerializer):
     beehive = serializers.CharField(source="beehive.name", read_only=True)
-    installations = InstallationSerializer(many=True)
 
     class Meta:
         model = Node
-        fields = ["vsn", "node_id", "beehive", "created", "registered", "installations"]
+        fields = ["vsn", "node_id", "beehive", "created", "registered"]
+
+
+class InstallationSerializer(serializers.ModelSerializer):
+    node = serializers.CharField(source="node.vsn", read_only=True)
+
+    class Meta:
+        model = Installation
+        fields = ["node", "start", "end", "is_protected", "notes"]
 
 
 class BeehiveViewSet(viewsets.ReadOnlyModelViewSet):
@@ -39,6 +39,12 @@ class NodeViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = NodeSerializer
     permission_classes = [AllowAny]
     lookup_field = "vsn"
+
+
+class InstallationViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Installation.objects.all()
+    serializer_class = InstallationSerializer
+    permission_classes = [AllowAny]
 
 
 # TODO change default permission to something more locked down

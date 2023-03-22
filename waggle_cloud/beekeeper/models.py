@@ -27,13 +27,13 @@ class Node(models.Model):
     def __str__(self):
         return self.vsn
 
-
+# Is it better to not inline this? Seems simpler in some ways to just make this its own thing...
 class Installation(models.Model):
-    node = models.ForeignKey(Node, on_delete=models.CASCADE, related_name="installations")
-    notes = models.TextField(blank=True)
+    node = models.ForeignKey(Node, on_delete=models.CASCADE)
     start = models.DateTimeField()
     end = models.DateTimeField(null=True, blank=True)
     is_protected = models.BooleanField(default=True)
+    notes = models.TextField(blank=True)
 
 
 def generate_node_registration_key():
