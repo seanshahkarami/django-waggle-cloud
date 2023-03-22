@@ -15,19 +15,25 @@ class Beehive(models.Model):
 
 
 class Node(models.Model):
-    vsn = models.CharField(max_length=8)
-    node_id = models.CharField(max_length=64)
+    vsn = models.CharField("VSN", max_length=8)
+    node_id = models.CharField("Node ID", max_length=64)
     beehive = models.ForeignKey(Beehive, null=True, on_delete=models.SET_NULL)
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL)
     registered = models.DateTimeField(null=True, blank=True)
-    commissioned = models.DateTimeField(null=True, blank=True)
-    retired = models.DateTimeField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     notes = models.TextField(default="", blank=True)
 
     def __str__(self):
         return self.vsn
+
+
+class Installation(models.Model):
+    node = models.ForeignKey(Node, on_delete=models.CASCADE, related_name="installations")
+    notes = models.TextField(blank=True)
+    start = models.DateTimeField()
+    end = models.DateTimeField(null=True, blank=True)
+    is_protected = models.BooleanField(default=True)
 
 
 def generate_node_registration_key():
