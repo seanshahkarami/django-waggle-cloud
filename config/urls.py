@@ -18,6 +18,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/beekeeper/", include("waggle_cloud.beekeeper.urls")),
-    path("api/ecr/", include("waggle_cloud.ecr.urls")),
+    path("beekeeper/", include("waggle_cloud.beekeeper.urls")),
+    path("ecr/", include("waggle_cloud.ecr.urls")),
 ]

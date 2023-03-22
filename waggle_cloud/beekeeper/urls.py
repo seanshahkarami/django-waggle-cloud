@@ -7,5 +7,5 @@ router.register(r"beehives", viewset=views.BeehiveViewSet)
 router.register(r"nodes", viewset=views.NodeViewSet)
 
 urlpatterns = [
-    path("", include(router.urls)),
+    path("api/", include(router.urls)),
 ]
