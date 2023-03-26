@@ -22,8 +22,15 @@ class App(models.Model):
         return f"{self.owner}/{self.name}:{self.version}"
 
     def get_absolute_url(self):
-        return reverse("app-detail", kwargs={"username": self.owner.username, "name": self.name, "version": self.version})
-    
+        return reverse(
+            "app-detail",
+            kwargs={
+                "username": self.owner.username,
+                "name": self.name,
+                "version": self.version,
+            },
+        )
+
     def architectures(self):
         return self.source.get("architectures", [])
 

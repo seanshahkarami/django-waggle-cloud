@@ -5,7 +5,6 @@ from .models import Beehive, Node, Installation
 
 
 class BeehiveSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Beehive
         fields = ["name", "description", "created"]

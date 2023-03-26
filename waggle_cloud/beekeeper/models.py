@@ -18,7 +18,9 @@ class Node(models.Model):
     vsn = models.CharField("VSN", max_length=8)
     node_id = models.CharField("Node ID", max_length=64)
     beehive = models.ForeignKey(Beehive, null=True, on_delete=models.SET_NULL)
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL)
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL
+    )
     registered = models.DateTimeField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -26,6 +28,7 @@ class Node(models.Model):
 
     def __str__(self):
         return self.vsn
+
 
 # Is it better to not inline this? Seems simpler in some ways to just make this its own thing...
 class Installation(models.Model):
@@ -41,7 +44,9 @@ def generate_node_registration_key():
 
 
 class NodeRegistrationToken(models.Model):
-    key = models.CharField(max_length=64, default=generate_node_registration_key, primary_key=True)
+    key = models.CharField(
+        max_length=64, default=generate_node_registration_key, primary_key=True
+    )
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     beehive = models.ForeignKey(Beehive, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)

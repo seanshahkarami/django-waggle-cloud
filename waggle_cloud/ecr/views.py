@@ -31,7 +31,9 @@ class AppListForOwnerAndNameView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
 
     def get_queryset(self):
-        return App.objects.filter(owner__username=self.kwargs["username"], name=self.kwargs["name"])
+        return App.objects.filter(
+            owner__username=self.kwargs["username"], name=self.kwargs["name"]
+        )
 
 
 class AppDetailView(generics.RetrieveAPIView):
